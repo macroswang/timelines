@@ -28,16 +28,20 @@ class DashedLinePainter extends CustomPainter {
   /// The [direction], [color], [gapColor] and [strokeCap] arguments must not be
   /// null.
   const DashedLinePainter({
-    required this.direction,
-    required this.color,
+    @required this.direction,
+    @required this.color,
     this.gapColor = Colors.transparent,
     this.dashSize = 1.0,
     this.gapSize = 1.0,
     this.strokeWidth = 1.0,
     this.strokeCap = StrokeCap.square,
-  })  : assert(dashSize >= 1),
+  })  : assert(direction != null),
+        assert(color != null),
+        assert(gapColor != null),
+        assert(dashSize >= 1),
         assert(gapSize >= 0),
-        assert(strokeWidth >= 0);
+        assert(strokeWidth >= 0),
+        assert(strokeCap != null);
 
   /// {@macro timelines.direction}
   final Axis direction;
@@ -112,11 +116,11 @@ class DashedLinePainter extends CustomPainter {
 
 class _DashOffset extends Offset {
   factory _DashOffset({
-    required Size containerSize,
-    required double strokeWidth,
-    required double dashSize,
-    required double gapSize,
-    required Axis axis,
+    @required Size containerSize,
+    @required double strokeWidth,
+    @required double dashSize,
+    @required double gapSize,
+    @required Axis axis,
   }) {
     return _DashOffset._(
       dx: axis == Axis.vertical ? containerSize.width / 2 : 0,
@@ -130,13 +134,13 @@ class _DashOffset extends Offset {
   }
 
   const _DashOffset._({
-    required double dx,
-    required double dy,
-    required this.strokeWidth,
-    required this.containerSize,
-    required this.dashSize,
-    required this.gapSize,
-    required this.axis,
+    @required double dx,
+    @required double dy,
+    @required this.strokeWidth,
+    @required this.containerSize,
+    @required this.dashSize,
+    @required this.gapSize,
+    @required this.axis,
   }) : super(dx, dy);
 
   final Size containerSize;
@@ -171,9 +175,9 @@ class _DashOffset extends Offset {
 
   _DashOffset _translateDirectionally(double offset) {
     if (axis == Axis.vertical) {
-      return translate(0, offset) as _DashOffset;
+      return translate(0, offset);
     } else {
-      return translate(offset, 0) as _DashOffset;
+      return translate(offset, 0);
     }
   }
 
@@ -194,13 +198,13 @@ class _DashOffset extends Offset {
   }
 
   _DashOffset copyWith({
-    double? dx,
-    double? dy,
-    Size? containerSize,
-    double? strokeWidth,
-    double? dashSize,
-    double? gapSize,
-    Axis? axis,
+    double dx,
+    double dy,
+    Size containerSize,
+    double strokeWidth,
+    double dashSize,
+    double gapSize,
+    Axis axis,
   }) {
     return _DashOffset._(
       dx: dx ?? this.dx,

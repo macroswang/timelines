@@ -16,8 +16,8 @@ import 'timeline_theme.dart';
 ///  * [TransparentConnector], which is a [Connector] that only takes up space.
 abstract class Connector extends StatelessWidget with ThemedConnectorComponent {
   /// Creates an connector.
-  const Connector({
-    Key? key,
+  Connector({
+    Key key,
     this.direction,
     this.space,
     this.thickness,
@@ -36,13 +36,13 @@ abstract class Connector extends StatelessWidget with ThemedConnectorComponent {
   ///
   /// * [SolidLineConnector],  exactly the same.
   factory Connector.solidLine({
-    Key? key,
-    Axis? direction,
-    double? thickness,
-    double? space,
-    double? indent,
-    double? endIndent,
-    Color? color,
+    Key key,
+    Axis direction,
+    double thickness,
+    double space,
+    double indent,
+    double endIndent,
+    Color color,
   }) {
     return SolidLineConnector(
       key: key,
@@ -61,16 +61,16 @@ abstract class Connector extends StatelessWidget with ThemedConnectorComponent {
   ///
   /// * [DashedLineConnector],  exactly the same.
   factory Connector.dashedLine({
-    Key? key,
-    Axis? direction,
-    double? thickness,
-    double? dash,
-    double? gap,
-    double? space,
-    double? indent,
-    double? endIndent,
-    Color? color,
-    Color? gapColor,
+    Key key,
+    Axis direction,
+    double thickness,
+    double dash,
+    double gap,
+    double space,
+    double indent,
+    double endIndent,
+    Color color,
+    Color gapColor,
   }) {
     return DashedLineConnector(
       key: key,
@@ -92,11 +92,11 @@ abstract class Connector extends StatelessWidget with ThemedConnectorComponent {
   ///
   /// * [TransparentConnector],  exactly the same.
   factory Connector.transparent({
-    Key? key,
-    Axis? direction,
-    double? indent,
-    double? endIndent,
-    double? space,
+    Key key,
+    Axis direction,
+    double indent,
+    double endIndent,
+    double space,
   }) {
     return TransparentConnector(
       key: key,
@@ -111,7 +111,7 @@ abstract class Connector extends StatelessWidget with ThemedConnectorComponent {
   ///
   /// {@macro timelines.connector.direction}
   @override
-  final Axis? direction;
+  final Axis direction;
 
   /// The connector's cross axis size extent.
   ///
@@ -119,34 +119,34 @@ abstract class Connector extends StatelessWidget with ThemedConnectorComponent {
   /// size specified by this value.
   /// {@macro timelines.connector.space}
   @override
-  final double? space;
+  final double space;
 
   /// The thickness of the line drawn within the connector.
   ///
   /// {@macro timelines.connector.thickness}
   @override
-  final double? thickness;
+  final double thickness;
 
   /// The amount of empty space to the leading edge of the connector.
   ///
   /// If this is null, then the [ConnectorThemeData.indent] is used. If that is
   /// also null, then this defaults to 0.0.
   @override
-  final double? indent;
+  final double indent;
 
   /// The amount of empty space to the trailing edge of the connector.
   ///
   /// If this is null, then the [ConnectorThemeData.indent] is used. If that is
   /// also null, then this defaults to 0.0.
   @override
-  final double? endIndent;
+  final double endIndent;
 
   /// The color to use when painting the line.
   ///
   /// If this is null, then the [ConnectorThemeData.color] is used. If that is
   /// also null, then [TimelineThemeData.color] is used.
   @override
-  final Color? color;
+  final Color color;
 }
 
 /// A thin line, with padding on either side.
@@ -160,14 +160,14 @@ class SolidLineConnector extends Connector {
   ///
   /// The [thickness], [space], [indent], and [endIndent] must be null or
   /// non-negative.
-  const SolidLineConnector({
-    Key? key,
-    Axis? direction,
-    double? thickness,
-    double? space,
-    double? indent,
-    double? endIndent,
-    Color? color,
+  SolidLineConnector({
+    Key key,
+    Axis direction,
+    double thickness,
+    double space,
+    double indent,
+    double endIndent,
+    Color color,
   }) : super(
           key: key,
           thickness: thickness,
@@ -210,6 +210,8 @@ class SolidLineConnector extends Connector {
           ),
         );
     }
+
+    throw ArgumentError('invalid direction: $direction');
   }
 }
 
@@ -224,13 +226,13 @@ class DecoratedLineConnector extends Connector {
   ///
   /// The [thickness], [space], [indent], and [endIndent] must be null or
   /// non-negative.
-  const DecoratedLineConnector({
-    Key? key,
-    Axis? direction,
-    double? thickness,
-    double? space,
-    double? indent,
-    double? endIndent,
+  DecoratedLineConnector({
+    Key key,
+    Axis direction,
+    double thickness,
+    double space,
+    double indent,
+    double endIndent,
     this.decoration,
   }) : super(
           key: key,
@@ -243,7 +245,7 @@ class DecoratedLineConnector extends Connector {
   /// The decoration to paint line.
   ///
   /// Use the [SolidLineConnector] class to specify a simple solid color line.
-  final Decoration? decoration;
+  final Decoration decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -280,6 +282,8 @@ class DecoratedLineConnector extends Connector {
           ),
         );
     }
+
+    throw ArgumentError('invalid direction: $direction');
   }
 }
 
@@ -298,16 +302,16 @@ class DashedLineConnector extends Connector {
   ///
   /// The [thickness], [space], [indent], and [endIndent] must be null or
   /// non-negative.
-  const DashedLineConnector({
-    Key? key,
-    Axis? direction,
-    double? thickness,
+  DashedLineConnector({
+    Key key,
+    Axis direction,
+    double thickness,
     this.dash,
     this.gap,
-    double? space,
-    double? indent,
-    double? endIndent,
-    Color? color,
+    double space,
+    double indent,
+    double endIndent,
+    Color color,
     this.gapColor,
   }) : super(
           key: key,
@@ -322,17 +326,17 @@ class DashedLineConnector extends Connector {
   /// The dash size of the line drawn within the connector.
   ///
   /// If this is null, then this defaults to 1.0.
-  final double? dash;
+  final double dash;
 
   /// The gap of the line drawn within the connector.
   ///
   /// If this is null, then this defaults to 1.0.
-  final double? gap;
+  final double gap;
 
   /// The color to use when painting the gap in the line.
   ///
   /// If this is null, then the [Colors.transparent] is used.
-  final Color? gapColor;
+  final Color gapColor;
 
   @override
   Widget build(BuildContext context) {
@@ -364,12 +368,12 @@ class TransparentConnector extends Connector {
   /// Creates a transparent connector.
   ///
   /// The [space], [indent], and [endIndent] must be null or non-negative.
-  const TransparentConnector({
-    Key? key,
-    Axis? direction,
-    double? indent,
-    double? endIndent,
-    double? space,
+  TransparentConnector({
+    Key key,
+    Axis direction,
+    double indent,
+    double endIndent,
+    double space,
   }) : super(
           key: key,
           direction: direction,
@@ -397,15 +401,17 @@ class _ConnectorIndent extends StatelessWidget {
   /// The [direction]and [child] must be null. And [space], [indent] and
   /// [endIndent] must be null or non-negative.
   const _ConnectorIndent({
-    Key? key,
-    required this.direction,
-    required this.space,
-    this.indent,
-    this.endIndent,
-    required this.child,
-  })   : assert(space == null || space >= 0),
+    Key key,
+    @required this.direction,
+    @required this.space,
+    @required this.indent,
+    @required this.endIndent,
+    @required this.child,
+  })  : assert(direction != null),
+        assert(space == null || space >= 0),
         assert(indent == null || indent >= 0),
         assert(endIndent == null || endIndent >= 0),
+        assert(child != null),
         super(key: key);
 
   /// {@macro timelines.direction}
@@ -415,13 +421,13 @@ class _ConnectorIndent extends StatelessWidget {
   ///
   /// The connector itself is always drawn as a line that is centered within the
   /// size specified by this value.
-  final double? space;
+  final double space;
 
   /// The amount of empty space to the leading edge of the connector.
-  final double? indent;
+  final double indent;
 
   /// The amount of empty space to the trailing edge of the connector.
-  final double? endIndent;
+  final double endIndent;
 
   /// The widget below this widget in the tree.
   ///
@@ -437,12 +443,12 @@ class _ConnectorIndent extends StatelessWidget {
         child: Padding(
           padding: direction == Axis.vertical
               ? EdgeInsetsDirectional.only(
-                  top: indent ?? 0,
-                  bottom: endIndent ?? 0,
+                  top: indent,
+                  bottom: endIndent,
                 )
               : EdgeInsetsDirectional.only(
-                  start: indent ?? 0,
-                  end: endIndent ?? 0,
+                  start: indent,
+                  end: endIndent,
                 ),
           child: child,
         ),
